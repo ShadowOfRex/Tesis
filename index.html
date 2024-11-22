@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Gestión</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      background-color: #343a40;
+      padding-top: 20px;
+    }
+    .sidebar a {
+      color: #ffffff;
+      text-decoration: none;
+      padding: 15px;
+      display: block;
+    }
+    .sidebar a:hover {
+      background-color: #495057;
+    }
+    .content {
+      margin-left: 250px;
+      padding: 20px;
+    }
+    .navbar-brand img {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="text-center mb-4">
+      <img src="tecnocell.jpg" alt="Logo" class="img-fluid rounded-circle mb-2" style="width: 60px; height: 60px;">
+      <h5 class="text-white">tecnocell</h5>
+    </div>
+    <a href="#" onclick="showSection('inventario')">Ingreso de Inventario</a>
+    <a href="#" onclick="showSection('reparaciones')">Reparaciones</a>
+    <a href="#" onclick="showSection('ventas')">Ventas</a>
+    <a href="#" onclick="showSection('clientes')">Clientes</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="tecnocell.jpg" alt="Logo"> Sistema de Gestión de inventario
+        </a>
+        <div class="dropdown ms-auto">
+          <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown">
+            <img src="user.jpg" alt="User" width="30" height="30" class="rounded-circle">
+            <span class="ms-2">Usuario</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar Sesión</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Sections -->
+    <div id="inventario" class="d-none">
+      <h2>Ingreso de Inventario</h2>
+      <button class="btn btn-primary mb-3" onclick="toggleForm()">Ingreso de Inventario</button>
+      <div id="formInventario" class="d-none">
+        <div class="mb-3">
+          <label for="imei" class="form-label">Código IMEI</label>
+          <input type="text" id="imei" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="marca" class="form-label">Marca</label>
+          <input type="text" id="marca" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="compania" class="form-label">Compañía</label>
+          <input type="text" id="compania" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="modelo" class="form-label">Modelo</label>
+          <input type="text" id="modelo" class="form-control">
+        </div>
+        <button class="btn btn-success" onclick="guardarInventario()">Guardar Inventario</button>
+        <button class="btn btn-secondary" onclick="toggleForm()">Regresar al Menú</button>
+      </div>
+      <table class="table table-striped mt-3">
+        <thead>
+          <tr>
+            <th>Código IMEI</th>
+            <th>Marca</th>
+            <th>Compañía</th>
+            <th>Modelo</th>
+          </tr>
+        </thead>
+        <tbody id="tablaInventario">
+          <!-- Aquí se añadirán los nuevos datos -->
+        </tbody>
+      </table>
+    </div>
+
+    <div id="reparaciones" class="d-none">
+      <h2>Reparaciones</h2>
+      <button class="btn btn-primary mb-3" onclick="toggleReparacionForm()">Ingreso de Reparación</button>
+      <div id="formReparacion" class="d-none">
+        <div class="mb-3">
+          <label for="codigo" class="form-label">Código</label>
+          <input type="text" id="codigo" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="fechaIngreso" class="form-label">Fecha de Ingreso</label>
+          <input type="date" id="fechaIngreso" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="cliente" class="form-label">Cliente</label>
+          <input type="text" id="cliente" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="modeloReparacion" class="form-label">Modelo</label>
+          <input type="text" id="modeloReparacion" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="descripcion" class="form-label">Descripción</label>
+          <textarea id="descripcion" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="foto" class="form-label">Foto del Dispositivo</label>
+          <input type="file" id="foto" class="form-control" accept="image/*">
+        </div>
+        <button class="btn btn-success" onclick="guardarReparacion()">Guardar Reparación</button>
+        <button class="btn btn-secondary" onclick="toggleReparacionForm()">Regresar al Menú</button>
+      </div>
+      <table class="table table-striped mt-3">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Fecha de Ingreso</th>
+            <th>Cliente</th>
+            <th>Modelo</th>
+            <th>Descripción</th>
+            <th>Foto</th>
+          </tr>
+        </thead>
+        <tbody id="tablaReparaciones">
+          <!-- Aquí se añadirán los nuevos datos -->
+        </tbody>
+      </table>
+    </div>
+    
+    <script>
+      function toggleReparacionForm() {
+        const form = document.getElementById('formReparacion');
+        form.classList.toggle('d-none');
+      }
+    
+      function guardarReparacion() {
+        const codigo = document.getElementById('codigo').value.trim();
+        const fechaIngreso = document.getElementById('fechaIngreso').value;
+        const cliente = document.getElementById('cliente').value.trim();
+        const modelo = document.getElementById('modeloReparacion').value.trim();
+        const descripcion = document.getElementById('descripcion').value.trim();
+        const fotoInput = document.getElementById('foto');
+        const foto = fotoInput.files[0];
+    
+        // Validar que todos los campos estén llenos
+        if (!codigo || !fechaIngreso || !cliente || !modelo || !descripcion || !foto) {
+          alert('Todos los campos son obligatorios.');
+          return;
+        }
+    
+        // Crear una fila para la tabla
+        const tabla = document.getElementById('tablaReparaciones');
+        const nuevaFila = document.createElement('tr');
+    
+        // Crear una URL para mostrar la foto cargada
+        const fotoURL = URL.createObjectURL(foto);
+    
+        nuevaFila.innerHTML = `
+          <td>${codigo}</td>
+          <td>${fechaIngreso}</td>
+          <td>${cliente}</td>
+          <td>${modelo}</td>
+          <td>${descripcion}</td>
+          <td><img src="${fotoURL}" alt="Foto del Dispositivo" style="width: 50px; height: auto;"></td>
+        `;
+    
+        // Añadir la fila a la tabla
+        tabla.appendChild(nuevaFila);
+    
+        alert('Reparación guardada exitosamente.');
+    
+        // Limpiar los campos del formulario
+        document.getElementById('codigo').value = '';
+        document.getElementById('fechaIngreso').value = '';
+        document.getElementById('cliente').value = '';
+        document.getElementById('modeloReparacion').value = '';
+        document.getElementById('descripcion').value = '';
+        fotoInput.value = '';
+    
+        // Ocultar el formulario
+        toggleReparacionForm();
+      }
+    </script>
+
+<div id="ventas" class="d-none">
+  <h2>Ventas</h2>
+  <button class="btn btn-primary mb-3" onclick="toggleVentaForm()">Agregar Venta</button>
+  <div id="formVenta" class="d-none">
+    <div class="mb-3">
+      <label for="fechaVenta" class="form-label">Fecha</label>
+      <input type="date" id="fechaVenta" class="form-control">
+    </div>
+    <div id="productosContainer" class="mb-3">
+      <h5>Productos</h5>
+      <div class="producto-item mb-2">
+        <div class="row">
+          <div class="col-md-8">
+            <input type="text" class="form-control descripcion" placeholder="Descripción">
+          </div>
+          <div class="col-md-4">
+            <input type="number" class="form-control precio" placeholder="Precio" oninput="calcularTotal()">
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-secondary mb-3" onclick="agregarProducto()">Agregar Producto</button>
+    <div class="mb-3">
+      <label for="totalVenta" class="form-label">Total</label>
+      <input type="number" id="totalVenta" class="form-control" readonly>
+    </div>
+    <button class="btn btn-success" onclick="guardarVenta()">Guardar Venta</button>
+    <button class="btn btn-secondary" onclick="toggleVentaForm()">Regresar al Menú</button>
+  </div>
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody id="tablaVentas">
+      <!-- Aquí se añadirán los nuevos datos -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+  function toggleVentaForm() {
+    const form = document.getElementById('formVenta');
+    form.classList.toggle('d-none');
+  }
+
+  function agregarProducto() {
+    const productosContainer = document.getElementById('productosContainer');
+    const nuevoProducto = document.createElement('div');
+    nuevoProducto.classList.add('producto-item', 'mb-2');
+    nuevoProducto.innerHTML = `
+      <div class="row">
+        <div class="col-md-8">
+          <input type="text" class="form-control descripcion" placeholder="Descripción">
+        </div>
+        <div class="col-md-4">
+          <input type="number" class="form-control precio" placeholder="Precio" oninput="calcularTotal()">
+        </div>
+      </div>
+    `;
+    productosContainer.appendChild(nuevoProducto);
+  }
+
+  function calcularTotal() {
+    const precios = document.querySelectorAll('.precio');
+    let total = 0;
+    precios.forEach(precioInput => {
+      const precio = parseFloat(precioInput.value);
+      if (!isNaN(precio)) {
+        total += precio;
+      }
+    });
+    document.getElementById('totalVenta').value = total.toFixed(2);
+  }
+
+  function guardarVenta() {
+    const fechaVenta = document.getElementById('fechaVenta').value;
+    const descripciones = document.querySelectorAll('.descripcion');
+    const precios = document.querySelectorAll('.precio');
+    const totalVenta = document.getElementById('totalVenta').value;
+
+    // Validar campos
+    if (!fechaVenta || descripciones.length === 0 || precios.length === 0) {
+      alert('Por favor, complete todos los campos.');
+      return;
+    }
+
+    let descripcionVenta = '';
+    descripciones.forEach((desc, index) => {
+      const precio = parseFloat(precios[index].value);
+      if (desc.value.trim() && !isNaN(precio)) {
+        descripcionVenta += `${desc.value.trim()} ($${precio.toFixed(2)}), `;
+      }
+    });
+
+    if (!descripcionVenta) {
+      alert('Por favor, agregue al menos un producto válido.');
+      return;
+    }
+
+    // Agregar datos a la tabla
+    const tabla = document.getElementById('tablaVentas');
+    const nuevaFila = document.createElement('tr');
+    nuevaFila.innerHTML = `
+      <td>${fechaVenta}</td>
+      <td>${descripcionVenta.slice(0, -2)}</td>
+      <td>$${totalVenta}</td>
+      <td>$${totalVenta}</td>
+    `;
+    tabla.appendChild(nuevaFila);
+
+    alert('Venta guardada exitosamente.');
+
+    // Limpiar formulario
+    document.getElementById('fechaVenta').value = '';
+    document.getElementById('totalVenta').value = '';
+    document.getElementById('productosContainer').innerHTML = `
+      <h5>Productos</h5>
+      <div class="producto-item mb-2">
+        <div class="row">
+          <div class="col-md-8">
+            <input type="text" class="form-control descripcion" placeholder="Descripción">
+          </div>
+          <div class="col-md-4">
+            <input type="number" class="form-control precio" placeholder="Precio" oninput="calcularTotal()">
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Ocultar formulario
+    toggleVentaForm();
+  }
+</script>
+
+
+<div id="clientes" class="d-none">
+  <h2>Clientes</h2>
+  <button class="btn btn-primary mb-3" onclick="toggleClienteForm()">Ingreso de Cliente</button>
+
+  <div id="formCliente" class="d-none">
+    <div class="mb-3">
+      <label for="dpiCliente" class="form-label">DPI</label>
+      <input type="text" id="dpiCliente" class="form-control" placeholder="Ingrese el DPI">
+    </div>
+    <div class="mb-3">
+      <label for="nombreCliente" class="form-label">Nombre del Cliente</label>
+      <input type="text" id="nombreCliente" class="form-control" placeholder="Ingrese el nombre">
+    </div>
+    <div class="mb-3">
+      <label for="telefonoCliente" class="form-label">Teléfono</label>
+      <input type="text" id="telefonoCliente" class="form-control" placeholder="Ingrese el teléfono">
+    </div>
+    <button class="btn btn-success" onclick="guardarCliente()">Guardar Cliente</button>
+    <button class="btn btn-secondary" onclick="toggleClienteForm()">Regresar al Menú</button>
+  </div>
+
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>DPI</th>
+        <th>Nombre Cliente</th>
+        <th>Teléfono</th>
+      </tr>
+    </thead>
+    <tbody id="tablaClientes">
+      <!-- Aquí se añadirán los nuevos clientes -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // Muestra u oculta el formulario de ingreso de clientes
+  function toggleClienteForm() {
+    const form = document.getElementById('formCliente');
+    form.classList.toggle('d-none');
+  }
+
+  // Función para guardar un cliente
+  function guardarCliente() {
+    const dpiCliente = document.getElementById('dpiCliente').value;
+    const nombreCliente = document.getElementById('nombreCliente').value;
+    const telefonoCliente = document.getElementById('telefonoCliente').value;
+
+    // Validar campos
+    if (!dpiCliente || !nombreCliente || !telefonoCliente) {
+      alert('Por favor, complete todos los campos.');
+      return;
+    }
+
+    // Agregar datos a la tabla de clientes
+    const tabla = document.getElementById('tablaClientes');
+    const nuevaFila = document.createElement('tr');
+    nuevaFila.innerHTML = `
+      <td>${dpiCliente}</td>
+      <td>${nombreCliente}</td>
+      <td>${telefonoCliente}</td>
+    `;
+    tabla.appendChild(nuevaFila);
+
+    alert('Cliente guardado exitosamente.');
+
+    // Limpiar formulario
+    document.getElementById('dpiCliente').value = '';
+    document.getElementById('nombreCliente').value = '';
+    document.getElementById('telefonoCliente').value = '';
+
+    // Ocultar formulario
+    toggleClienteForm();
+  }
+</script>
+
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript -->
+  <script>
+    function showSection(sectionId) {
+      document.querySelectorAll('.content > div').forEach(section => section.classList.add('d-none'));
+      document.getElementById(sectionId).classList.remove('d-none');
+    }
+
+    function logout() {
+      alert('Cerrando sesión...');
+      window.location.href = 'user.html';
+    }
+
+    function toggleForm() {
+      const form = document.getElementById('formInventario');
+      form.classList.toggle('d-none');
+    }
+
+    function guardarInventario() {
+      const imei = document.getElementById('imei').value.trim();
+      const marca = document.getElementById('marca').value.trim();
+      const compania = document.getElementById('compania').value.trim();
+      const modelo = document.getElementById('modelo').value.trim();
+
+      if (!imei || !marca || !compania || !modelo) {
+        alert('Todos los campos son obligatorios.');
+        return;
+      }
+
+      const tabla = document.getElementById('tablaInventario');
+      const nuevaFila = document.createElement('tr');
+
+      nuevaFila.innerHTML = `
+        <td>${imei}</td>
+        <td>${marca}</td>
+        <td>${compania}</td>
+        <td>${modelo}</td>
+      `;
+
+      tabla.appendChild(nuevaFila);
+
+      alert('Inventario guardado exitosamente.');
+
+      // Limpiar los campos
+      document.getElementById('imei').value = '';
+      document.getElementById('marca').value = '';
+      document.getElementById('compania').value = '';
+      document.getElementById('modelo').value = '';
+
+      // Ocultar el formulario
+      toggleForm();
+    }
+  </script>
+</body>
+</html>
+
+

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Gestión</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="text-center mb-4">
+      <img src="tecnocell.jpg" alt="Logo" class="img-fluid rounded-circle mb-2" style="width: 60px; height: 60px;">
+      <h5 class="text-white">tecnocell</h5>
+    </div>
+    <a href="#" onclick="showSection('inventario')">Ingreso de Inventario</a>
+    <a href="#" onclick="showSection('reparaciones')">Reparaciones</a>
+    <a href="#" onclick="showSection('ventas')">Ventas</a>
+    <a href="#" onclick="showSection('clientes')">Clientes</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="tecnocell.jpg" alt="Logo"> Sistema de Gestión de inventario
+        </a>
+        <div class="dropdown ms-auto">
+          <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown">
+            <img src="user.jpg" alt="User" width="30" height="30" class="rounded-circle">
+            <span class="ms-2">Usuario</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar Sesión</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Sections -->
+    <div id="inventario" class="d-none">
+      <h2>Ingreso de Inventario</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Código IMEI</th>
+            <th>Marca</th>
+            <th>Compañía</th>
+            <th>Modelo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Ejemplo de datos, se pueden reemplazar por dinámicos -->
+          <tr>
+            <td>123456789012345</td>
+            <td>Samsung</td>
+            <td>Movistar</td>
+            <td>Galaxy S21</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div id="reparaciones" class="d-none">
+      <h2>Reparaciones</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Fecha de Ingreso</th>
+            <th>Cliente</th>
+            <th>Modelo</th>
+            <th>Descripción</th>
+            <th>Foto del Dispositivo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Ejemplo de datos -->
+          <tr>
+            <td>R001</td>
+            <td>2024-11-09</td>
+            <td>Juan Pérez</td>
+            <td>iPhone 12</td>
+            <td>Pantalla rota</td>
+            <td><img src="iphone.jpg" alt="iPhone" style="width: 60px; height: auto;"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="ventas" class="d-none">
+      <h2>Ventas</h2>
+      <p>Formulario para registrar ventas...</p>
+    </div>
+    <div id="clientes" class="d-none">
+      <h2>Clientes</h2>
+      <p>Gestión de clientes aquí...</p>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
+
